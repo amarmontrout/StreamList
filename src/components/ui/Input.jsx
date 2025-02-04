@@ -1,33 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "./Button";
 
-const Input = () => {
-  const [inputText, setInputText] = useState("");
-  const [showText, setShowText] = useState(false);
-
-  const handleChange = (e) => {
-    setShowText(false);
-    setInputText(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(inputText);
-    setShowText(true);
-  };
-
+const Input = (props) => {
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={props.handleSubmit}>
         <input
-          onChange={handleChange}
+          onChange={props.handleChange}
           type="text"
-          value={inputText}
-          placeholder="Enter text..."
+          value={props.inputText}
+          placeholder="Enter movie..."
         />
-        <Button type="submit" text="Submit" />
+        <Button type="submit" />
       </form>
-      {showText && <div className="textInput">{inputText}</div>}
     </>
   );
 };

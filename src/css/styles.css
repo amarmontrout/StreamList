@@ -11,7 +11,11 @@ body {
 }
 
 nav {
-  background-image: linear-gradient(to top, rgba(255,0,0,0), rgba(255, 255, 255, 0.658));
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 0, 0, 0),
+    rgba(255, 255, 255, 0.658)
+  );
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 
   padding-left: 5%;
@@ -56,8 +60,11 @@ nav a {
 }
 
 nav a:hover {
-  background-image: linear-gradient(to top, rgba(255,0,0,0), rgba(255, 255, 255, 0.658));
-  
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 0, 0, 0),
+    rgba(255, 255, 255, 0.658)
+  );
 }
 
 .side {
@@ -89,25 +96,12 @@ nav a:hover {
   display: none;
 }
 
-.textInput {
-  text-align: center;
-  font-size: 25px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  border-radius: 50px;
-}
-
 header {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 5rem;
-
+  font-size: 1.6rem;
   font-weight: 700;
   font-style: normal;
 }
@@ -128,6 +122,8 @@ footer {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -136,6 +132,7 @@ form {
   justify-content: center;
   align-items: center;
   margin-top: 5px;
+  margin-bottom: 20px;
 }
 
 input {
@@ -147,6 +144,28 @@ button {
   margin-left: 3px;
   padding: 5px;
   border-radius: 5px;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  text-align: center;
+  font-size: 1.5rem;
+  max-width: 65%;
+  border: 2px solid black;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.delete-btn {
+  margin-left: 5px;
+}
+
+.edit-btn {
+  margin-left: 10px;
 }
 
 @media (max-width: 800px) {
@@ -161,6 +180,10 @@ button {
   nav {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .list-item {
+    max-width: 90%;
   }
 }
 
