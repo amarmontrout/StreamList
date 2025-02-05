@@ -8,16 +8,21 @@ body {
   background-image: url("https://www.transparenttextures.com/patterns/soft-circle-scales.png");
   font-family: "Montserrat Underline", serif;
   font-optical-sizing: auto;
+  min-width: fit-content;
+}
+
+h3 {
+  text-align: center;
+  color: #DF2430;
 }
 
 nav {
   background-image: linear-gradient(
     to top,
-    rgba(255, 0, 0, 0),
-    rgba(255, 255, 255, 0.658)
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 1)
   );
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
-
+  border-bottom: 1px solid #003649;
   padding-left: 5%;
   padding-right: 5%;
 }
@@ -102,13 +107,17 @@ header {
   align-items: center;
   height: 5rem;
   font-size: 1.6rem;
-  font-weight: 700;
+  font-family: "Montserrat", serif;
+  font-weight: 500;
   font-style: normal;
+  color: white;
 }
 
 footer {
-  border-top: 3px solid #000;
-  padding-top: 20px;
+  border-top: 3px solid rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5);
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-top: auto;
   font-weight: bold;
   font-size: 20px;
@@ -118,13 +127,16 @@ footer {
   display: flex;
   flex-direction: column;
   margin: 0 10%;
-  min-height: 800px;
+  padding: 0 10px;
+  height: calc(100vh - 101px);
+  background-color: rgba(0, 0, 0, 0.60);
 }
 
 main {
   display: flex;
   flex-direction: column;
   width: 100%;
+  font-family: "Montserrat", serif;
 }
 
 form {
@@ -137,27 +149,44 @@ form {
 
 input {
   height: 30px;
+  width: 250px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 5px;
+  outline: none;
+  padding-left: 5px;
+}
+
+#edit-input {
+  background-color: rgba(255, 255, 255, 0.2);
+  font-family: "Montserrat", serif;
+  font-size: 1.5rem;
+  padding-left: 0;
 }
 
 button {
   height: 34px;
-  margin-left: 3px;
-  padding: 5px;
+  margin-left: 5px;
+  padding: 5px 10px;
   border-radius: 5px;
+  border: none;
 }
 
 .list-item {
   display: flex;
   flex-direction: row;
-  margin: 0 auto;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   padding: 10px;
   text-align: center;
   font-size: 1.5rem;
-  max-width: 65%;
   border: 2px solid black;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+  align-items: center;
+}
+
+.movie-title {
+  text-align: left;
 }
 
 .delete-btn {
@@ -168,7 +197,14 @@ button {
   margin-left: 10px;
 }
 
-@media (max-width: 800px) {
+.btns {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
   .hide {
     display: none;
   }
@@ -183,12 +219,25 @@ button {
   }
 
   .list-item {
-    max-width: 90%;
+    font-size: 1.1rem;
+  }
+
+  .container {
+    margin: 0 10%;
+  }
+
+  #edit-input {
+    width: fit-content;
+    font-size: 1.1rem;
   }
 }
 
 @media (max-width: 400px) {
   .side {
     width: 100%;
+  }
+
+  .container {
+    margin: 0;
   }
 }
