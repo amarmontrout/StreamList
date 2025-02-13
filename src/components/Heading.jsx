@@ -1,4 +1,5 @@
 import React from "react";
+import "../css/Heading.css"
 
 const Heading = ({ children }) => {
   return (

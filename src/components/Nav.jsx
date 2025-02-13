@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../css/Nav.css"
 
 const Nav = () => {
   const [isVisible, setIsVisisble] = useState(false);

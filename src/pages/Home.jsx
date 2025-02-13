@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import Heading from ".././components/Heading";
+import ListItem from "../components/ListItem";
 import Input from "../components/ui/Input";
 import Footer from "../components/Footer";
 
@@ -9,18 +11,34 @@ const Home = () => {
   const [editingItem, setEditingItem] = useState(null);
   const [editText, setEditText] = useState("");
 
+  useEffect(() => {
+    setInputList(JSON.parse(localStorage.getItem("streamList")) || []);
+  }, []);
+
+  const saveToLocalStorage = (results) => {
+    localStorage.setItem("streamList", JSON.stringify(results));
+  };
+
   const handleChange = (e) => {
     setInputText(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setInputList((prev) => [...prev, inputText]);
+    setInputList((prev) => {
+      const updatedList = [...prev, inputText];
+      saveToLocalStorage(updatedList);
+      return updatedList;
+    });
     setInputText("");
   };
 
   const handleDelete = (item) => {
-    setInputList((prev) => prev.filter((entry) => entry !== item));
+    setInputList((prev) => {
+      const updatedList = prev.filter((entry) => entry !== item);
+      saveToLocalStorage(updatedList);
+      return updatedList;
+    });
   };
 
   const handleEdit = (item) => {
@@ -29,9 +47,13 @@ const Home = () => {
   };
 
   const handleSaveEdit = (item) => {
-    setInputList((prevList) =>
-      prevList.map((entry) => (entry === item ? editText : entry))
-    );
+    setInputList((prevList) => {
+      const updatedList = prevList.map((entry) =>
+        entry === item ? editText : entry
+      );
+      saveToLocalStorage(updatedList);
+      return updatedList;
+    });
     setEditingItem(null);
   };
 
@@ -49,57 +71,18 @@ const Home = () => {
         {inputList.length === 0 ? (
           <h3>No movies found. Please add a movie to your list.</h3>
         ) : (
-          inputList.map((item, index) => {
+          inputList.map((item) => {
             return (
-              <div key={index} className="list-item">
-                <div className="movie-title">
-                  {editingItem === item ? (
-                    <input
-                      id="edit-input"
-                      value={editText}
-                      onChange={(e) => setEditText(e.target.value)}
-                      onBlur={() => handleSaveEdit(item)}
-                      autoFocus
-                    />
-                  ) : (
-                    item
-                  )}
-                </div>
-                <div className="btns">
-                  <button
-                    onClick={() => {
-                      handleEdit(item);
-                    }}
-                    className="edit-btn"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24px"
-                      viewBox="0 -960 960 960"
-                      width="24px"
-                      fill="#000"
-                    >
-                      <path d="M160-400v-80h280v80H160Zm0-160v-80h440v80H160Zm0-160v-80h440v80H160Zm360 560v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q8 9 12.5 20t4.5 22q0 11-4 22.5T863-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleDelete(item);
-                    }}
-                    className="delete-btn"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24px"
-                      viewBox="0 -960 960 960"
-                      width="24px"
-                      fill="#000"
-                    >
-                      <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+              <ListItem
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+                handleSaveEdit={handleSaveEdit}
+                editingItem={editingItem}
+                item={item}
+                editText={editText}
+                setEditText={setEditText}
+                key={uuidv4()}
+              />
             );
           })
         )}

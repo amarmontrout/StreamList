@@ -1,0 +1,37 @@
+.movie-card-results {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movie-card {
+  margin-bottom: 5px;
+  padding: 15px;
+  border: 2px solid black;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  text-align: center;
+  width: 400px;
+  min-height: 600px;
+}
+
+.movie-card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.movie-card-release-date {
+  font-size: 1.25rem;
+  margin-top: 10px;
+}
+
+.movie-card-overview {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.movie-card-poster {
+  height: 350px;
+  margin-top: 10px;
+}
