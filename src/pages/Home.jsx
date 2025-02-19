@@ -1,61 +1,106 @@
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useCallback, useMemo } from "react";
 import Heading from ".././components/Heading";
 import ListItem from "../components/ListItem";
 import Input from "../components/ui/Input";
 import Footer from "../components/Footer";
 
 const Home = () => {
-  const [inputList, setInputList] = useState([]);
+  const [inputList, setInputList] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("streamList")) || [];
+    } catch (error) {
+      console.error("Error loading from localStorage:", error);
+      return [];
+    }
+  });
   const [inputText, setInputText] = useState("");
   const [editingItem, setEditingItem] = useState(null);
   const [editText, setEditText] = useState("");
 
-  useEffect(() => {
-    setInputList(JSON.parse(localStorage.getItem("streamList")) || []);
+  const saveToLocalStorage = useCallback((results) => {
+    try {
+      localStorage.setItem("streamList", JSON.stringify(results));
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+    }
   }, []);
 
-  const saveToLocalStorage = (results) => {
-    localStorage.setItem("streamList", JSON.stringify(results));
-  };
-
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     setInputText(e.target.value);
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setInputList((prev) => {
-      const updatedList = [...prev, inputText];
-      saveToLocalStorage(updatedList);
-      return updatedList;
-    });
-    setInputText("");
-  };
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!inputText.trim()) return;
 
-  const handleDelete = (item) => {
-    setInputList((prev) => {
-      const updatedList = prev.filter((entry) => entry !== item);
-      saveToLocalStorage(updatedList);
-      return updatedList;
-    });
-  };
+      setInputList((prev) => {
+        const updatedList = [...prev, inputText.trim()];
+        saveToLocalStorage(updatedList);
+        return updatedList;
+      });
+      setInputText("");
+    },
+    [inputText, saveToLocalStorage]
+  );
 
-  const handleEdit = (item) => {
+  const handleDelete = useCallback(
+    (item) => {
+      setInputList((prev) => {
+        const updatedList = prev.filter((entry) => entry !== item);
+        saveToLocalStorage(updatedList);
+        return updatedList;
+      });
+    },
+    [saveToLocalStorage]
+  );
+
+  const handleEdit = useCallback((item) => {
     setEditingItem(item);
     setEditText(item);
-  };
+  }, []);
 
-  const handleSaveEdit = (item) => {
-    setInputList((prevList) => {
-      const updatedList = prevList.map((entry) =>
-        entry === item ? editText : entry
-      );
-      saveToLocalStorage(updatedList);
-      return updatedList;
-    });
-    setEditingItem(null);
-  };
+  const handleSaveEdit = useCallback(
+    (item) => {
+      if (!editText.trim()) return;
+
+      setInputList((prevList) => {
+        const updatedList = prevList.map((entry) =>
+          entry === item ? editText.trim() : entry
+        );
+        saveToLocalStorage(updatedList);
+        return updatedList;
+      });
+      setEditingItem(null);
+    },
+    [editText, saveToLocalStorage]
+  );
+
+  const renderListItems = useMemo(() => {
+    if (inputList.length === 0) {
+      return <h3>No movies found. Please add a movie to your list.</h3>;
+    }
+
+    return inputList.map((item, index) => (
+      <ListItem
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+        handleSaveEdit={handleSaveEdit}
+        editingItem={editingItem}
+        item={item}
+        editText={editText}
+        setEditText={setEditText}
+        key={`${item}-${index}`} // Better key strategy
+      />
+    ));
+  }, [
+    inputList,
+    editingItem,
+    editText,
+    handleDelete,
+    handleEdit,
+    handleSaveEdit,
+  ]);
 
   return (
     <div className="container">
@@ -68,24 +113,7 @@ const Home = () => {
           handleSubmit={handleSubmit}
           inputText={inputText}
         />
-        {inputList.length === 0 ? (
-          <h3>No movies found. Please add a movie to your list.</h3>
-        ) : (
-          inputList.map((item) => {
-            return (
-              <ListItem
-                handleDelete={handleDelete}
-                handleEdit={handleEdit}
-                handleSaveEdit={handleSaveEdit}
-                editingItem={editingItem}
-                item={item}
-                editText={editText}
-                setEditText={setEditText}
-                key={uuidv4()}
-              />
-            );
-          })
-        )}
+        {renderListItems}
       </main>
       <Footer />
     </div>

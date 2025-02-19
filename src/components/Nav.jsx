@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import "../css/Nav.css"
 
 const Nav = () => {
-  const [isVisible, setIsVisisble] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const showSidebar = () => {
-    setIsVisisble((prev) => !prev);
+    setIsVisible((prev) => !prev);
   };
   const hideSidebar = () => {
-    setIsVisisble((prev) => !prev);
+    setIsVisible((prev) => !prev);
   };
 
   return (
