@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration.js";
 import "./css/styles.css"
 
 createRoot(document.getElementById("root")).render(
@@ -8,3 +9,5 @@ createRoot(document.getElementById("root")).render(
     <App />
   </BrowserRouter>
 );
+
+serviceWorkerRegistration.register();

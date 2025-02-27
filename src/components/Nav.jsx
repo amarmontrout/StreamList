@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../css/Nav.css"
+import "../css/Nav.css";
 
 const Nav = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,12 +32,6 @@ const Nav = () => {
         </li>
         <li className="hide">
           <Link to="/movies">Movies</Link>
-        </li>
-        <li className="hide">
-          <Link to="/cart">Cart</Link>
-        </li>
-        <li className="hide">
-          <Link to="/about">About</Link>
         </li>
         <li className="menu" onClick={showSidebar}>
           <a>
@@ -73,12 +67,6 @@ const Nav = () => {
         </li>
         <li>
           <Link to="/movies">Movies</Link>
-        </li>
-        <li>
-          <Link to="/cart">Cart</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
         </li>
       </ul>
     </nav>
